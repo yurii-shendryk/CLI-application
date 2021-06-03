@@ -9,9 +9,7 @@ const generateId = (arrayOfNumbers) => {
   return id;
 };
 
-// TODO: задокументировать каждую функцию
 async function listContacts() {
-  // ...твой код
   try {
     const contactsList = await fs.readFile(contactsPath, "utf8");
     const parsedContactsList = JSON.parse(contactsList);
@@ -22,7 +20,6 @@ async function listContacts() {
 }
 
 async function getContactById(contactId) {
-  // ...твой код
   try {
     const contactsList = await listContacts();
     const contactById = contactsList.find(({ id }) => Number(contactId) === id);
@@ -33,7 +30,6 @@ async function getContactById(contactId) {
 }
 
 async function removeContact(contactId) {
-  // ...твой код
   try {
     const contactsList = await listContacts();
     const newContactList = contactsList.filter(
@@ -47,7 +43,6 @@ async function removeContact(contactId) {
 }
 
 async function addContact(name, email, phone) {
-  // ...твой код
   const contactsList = await listContacts();
   const contactId = generateId(contactsList);
   const newContact = {
@@ -58,7 +53,6 @@ async function addContact(name, email, phone) {
   };
   const newContactList = [...contactsList, newContact];
   await fs.writeFile(contactsPath, JSON.stringify(newContactList), "utf8");
-  //   console.log(maxId);
   return newContactList;
 }
 
