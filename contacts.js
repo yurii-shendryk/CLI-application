@@ -36,6 +36,7 @@ async function removeContact(contactId) {
       ({ id }) => Number(contactId) !== id
     );
     await fs.writeFile(contactsPath, JSON.stringify(newContactList), "utf8");
+    console.log(`contact with id ${contactId} has been removed from list`);
     return newContactList;
   } catch (error) {
     console.error(error);
@@ -43,17 +44,22 @@ async function removeContact(contactId) {
 }
 
 async function addContact(name, email, phone) {
-  const contactsList = await listContacts();
-  const contactId = generateId(contactsList);
-  const newContact = {
-    id: contactId,
-    name,
-    email,
-    phone,
-  };
-  const newContactList = [...contactsList, newContact];
-  await fs.writeFile(contactsPath, JSON.stringify(newContactList), "utf8");
-  return newContactList;
+  try {
+    const contactsList = await listContacts();
+    const contactId = generateId(contactsList);
+    const newContact = {
+      id: contactId,
+      name,
+      email,
+      phone,
+    };
+    const newContactList = [...contactsList, newContact];
+    await fs.writeFile(contactsPath, JSON.stringify(newContactList), "utf8");
+    console.log(`contact add to list`);
+    return newContactList;
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 module.exports = {
